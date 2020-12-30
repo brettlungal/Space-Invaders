@@ -1,5 +1,7 @@
 #ifndef WORLD_H_
 #define WORLD_H_
+#include <vector>
+#include "Player.hpp"
 
 class World{
     
@@ -25,10 +27,11 @@ class World{
             "|                                     |",
             "_______________________________________"
             };
-        int playerX;
-        int playerY;
         int width;
         int height;
+        Player *player;
+        
+
     public:
         World();
         void printWorld();

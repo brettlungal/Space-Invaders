@@ -5,16 +5,18 @@ using namespace std;
 
 World::World(){
 
-    this->playerX=8;
-    this->playerY=17;
+
     this->width = sizeof(this->world[0]); //x size
     this->height = sizeof(this->world)/this->width; //y size
+    this->player = new Player(this->width,this->height);
 }
 
 void World::printWorld(){
+    int playerX = this->player->getXCoordinate();
+    int playerY = this->player->getYCoordinate();
     for ( int i = 0; i < this->height; i++ ){
         for ( int j = 0; j < this->width; j++ ){
-            if ( i == this->playerY && j == this->playerX ){
+            if ( i == playerY && j == playerX ){
                 cout<<"A";
             }else{
                 cout<<this->world[i][j];
@@ -26,26 +28,28 @@ void World::printWorld(){
 
 
 void World::moveX(bool left){
+    int playerX = this->player->getXCoordinate();
+    int playerY = this->player->getYCoordinate();
     if ( left ){
         //move character left
-        if ( this->playerX < 2 ){
+        if ( playerX < 2 ){
             //roll over to other side
-            this->world[this->playerY][this->playerX] = ' ';
-            this->playerX = this->width - 4;
+            this->world[playerY][playerX] = ' ';
+            this->player->setX(this->width - 4);
         }else{
-            this->world[this->playerY][this->playerX] = ' ';
-            this->playerX--;
+            this->world[playerY][playerX] = ' ';
+            this->player->moveLeft();
         }
 
     }else{
         //moving right
-        if ( this->playerX > (this->width-5) ){
+        if ( playerX > (this->width-5) ){
             //roll over to other side
-            this->world[this->playerY][this->playerX] = ' ';
-            this->playerX = 1;
+            this->world[playerY][playerX] = ' ';
+            this->player->setX(1);
         }else{
-            this->world[this->playerY][this->playerX] = ' ';
-            this->playerX++;
+            this->world[playerY][playerX] = ' ';
+            this->player->moveRight();
         }
     }
 }
